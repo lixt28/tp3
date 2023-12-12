@@ -12,7 +12,7 @@ class Produit{
     int getPrixUnitaire() const;
     int getID() const;
     void modifier(int nouvelleQuantite);
-    friend std::ostream& operator<<(std::ostream& os, Produit& produit);
+    friend std::ostream& operator<<(std::ostream& osProduit, Produit& produit);
 
     private:
     std::string _titre;

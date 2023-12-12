@@ -29,9 +29,9 @@ void Produit::modifier(int nouvelleQuantite){
     _quantite = nouvelleQuantite;
 }
 
-std::ostream& operator<<(std::ostream& os, Produit& produit){
+std::ostream& operator<<(std::ostream& osProduit, Produit& produit){
     std::string display = "Le produit " + produit.getTitre() 
     + " Numero" + std::to_string(produit.getID()) + "est en quantité de " + produit.getDescription() + ".";
-    os << display << std::endl;
-    return os;
+    osProduit << display << std::endl;
+    return osProduit;
 }
