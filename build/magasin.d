@@ -1,1 +1,1 @@
-build/magasin.o: magasin.cpp magasin.h
+build/magasin.o: magasin.cpp magasin.h produit.h client.h commande.h

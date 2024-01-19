@@ -1,23 +1,26 @@
 #ifndef COMMANDE_H
 #define COMMANDE_H
-#include "produit.h"
 #include "client.h"
-#include <string>
 #include <vector>
 
-class Commande{
-    private:
-    Client _client;
-    Produit _produit;
-    bool _status;
-    std::vector<int> _PanierCommande ;
+class Commande {
+public:
+    Commande(Client client, bool status = false);
 
-    public:
-    friend  std::ostream& operator << (std::ostream& osCommande, Commande& commande);
-    Commande(Client client,bool status);
     void ModifierStatus();
     Client getClient() const;
 
+    // Add a getter function for _PanierCommande
+    std::vector<std::pair<int, int>> getPanierCommande() const {
+        return _PanierCommande;
+    }
+
+    friend std::ostream& operator<<(std::ostream& osCommande, Commande& commande);
+
+private:
+    Client _client;
+    std::vector<std::pair<int, int>> _PanierCommande;
+    bool _status;
 };
 
-#endif
+#endif // COMMANDE_H

@@ -1,23 +1,24 @@
 #include "commande.h"
+#include <iostream>
 
-Commande::Commande(Client client, bool status=false){
-    _client = client;
-    _PanierCommande.push_back(client.getPanierValider());
-    _status=status;
-};
+// In commande.cpp
+Commande::Commande(Client client, bool status /*= false*/)
+    : _client(client), _PanierCommande(client.retrievePanierValider()), _status(status) {}
 
-std::ostream& operator<<(std::ostream& osCommande, Commande& commande){
-    std::string display = "La commande " + _client.getNom() + _client.getPrenom() +
-     " Numero" + _client.getNumeroTelephone() +  std::to_string(produit.getID()) + "est en quantité de " + produit.getDescription() + ".";
+
+void Commande::ModifierStatus() {
+    _status = true;
+}
+
+Client Commande::getClient() const {
+    return _client;
+}
+
+std::ostream& operator<<(std::ostream& osCommande, Commande& commande) {
+    std::string display = "La commande " + commande._client.getNom() + " " + commande._client.getPrenom() +
+                          " Numero " + std::to_string(commande._client.getNumeroTelephone()) +
+                          " est en quantité de " + /* Add appropriate code for product information */ ".";
     osCommande << display << std::endl;
     return osCommande;
-}
-
-void Commande::ModifierStatus(){
-    _status=true;
-}
-
-Client Commande::getClient() const{
-    return _client;
 }
 

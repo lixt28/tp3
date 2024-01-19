@@ -17,15 +17,14 @@ int Client::getNumeroTelephone() const{
     return _numeroTelephone;
 }
 
-void Client::getPanierAchat(){
-    board.assign(_panierAchat.size(), std::vector<int>(_panierAchat.size(), 0));
-    for (int i = 0; i < _panierAchat.size(); ++i) {
-        for (int j = 0; j < _panierAchat.size(); ++j) {
-            std::cout << board[i][j] << "\t";
-        }
-        std::cout << std::endl;
+void Client::getPanierAchat() const {
+    for (const auto& item : _panierAchat) {
+        std::cout << "Produit ID: " << item.first
+                  << "\tQuantité: " << item.second
+                  << std::endl;
     }
 }
+
 
 void Client::AjouterProduitPanierAchat(Produit& p,int quantite){
   std::pair<int,int>CoupleElementProduit;
@@ -34,37 +33,20 @@ void Client::AjouterProduitPanierAchat(Produit& p,int quantite){
    _panierAchat.push_back(CoupleElementProduit);
 }
 
-void Client::ViderPanier(){
-    for(auto i=0; i<_panierAchat.size();i++){
+void Client::ViderPanier() {
+    for (size_t i = 0; i < _panierAchat.size(); i++) {
         _panierAchat.pop_back();
     }
 }
 
- /*for(int i=0 ; i<_panierAchat.size() ; i++)
-{
-  std::cout << _panierAchat[i].first << "\t" << _panierAchat[i].second << std::endl;
-}*/
-
-void Client::ModifierQuantiteProduit(Produit& p, int quantite){
-   for(int i=0 ; i<_panierAchat.size() ; i++)
-    {
-        if(_panierAchat[i].first==p.getID()){
-            _panierAchat[i].second=quantite;
+void Client::ModifierQuantiteProduit(Produit& p, int quantite) {
+    for (size_t i = 0; i < _panierAchat.size(); i++) {
+        if (_panierAchat[i].first == p.getID()) {
+            _panierAchat[i].second = quantite;
         }
-    }  
+    }
 }
 
-// void Client::SupprimerElementPanier(int idproduit){
-//     for(int i=0 ; i<_panierAchat.size() ; i++)
-//     {
-//         if(_panierAchat[i].first==idproduit){
-//             //std::remove(_panierAchat[i]);
-//            // _panierAchat[i].swap(_panierAchat.end());
-           
-
-//         }
-//     }  
-// }
 void Client::SupprimerElementPanier(int idproduit) {
     for (auto it = _panierAchat.begin(); it != _panierAchat.end(); ++it) {
         if (it->first == idproduit) {
@@ -74,40 +56,56 @@ void Client::SupprimerElementPanier(int idproduit) {
     }
 }
 
-void Client::ValiderPanier(){
+void Client::ValiderPanier() {
     std::string reponse;
-    board.assign(_panierAchat.size(), std::vector<int>(_panierAchat.size(), 0));
-    for(auto i=0;i < _panierAchat.size();i++){
-         for (int j = 0; j < _panierAchat.size(); ++j) {
-            std::cout << board[i][j] << "\t";
-            std::cout<<"voulez-vous commander le produit ? O/N";
-            std::cin>>reponse;
-            if(reponse == "O"){
-                std::pair<int,int>CoupleElementPanierFinal;
-                CoupleElementPanierFinal.first=_panierAchat[i].first;
-                CoupleElementPanierFinal.second=_panierAchat[i].second; 
-                _panierValider.push_back(CoupleElementPanierFinal);
-            }
+
+    for (const auto& item : _panierAchat) {
+        std::cout << "Produit ID: " << item.first
+                  << "\tQuantité: " << item.second
+                  << "\tvoulez-vous commander le produit ? O/N: ";
+
+        std::cin >> reponse;
+
+        if (reponse == "O") {
+            _panierValider.push_back(item);
         }
-        std::cout << std::endl;
-        
     }
 }
 
-void Client::getPanierValider(){
-    board.assign(_panierValider.size(), std::vector<int>(_panierValider.size(), 0));
-    for (int i = 0; i < _panierValider.size(); ++i) {
-        for (int j = 0; j < _panierValider.size(); ++j) {
-            std::cout << board[i][j] << "\t";
-        }
-        std::cout << std::endl;
+
+// void Client::getPanierValider() {
+//     for (int i = 0; i < _panierValider.size(); ++i) {
+//         std::cout << "Produit ID: " << _panierValider[i].first
+//                   << "\tQuantité: " << _panierValider[i].second
+//                   << std::endl;
+//     }
+// }
+
+// In client.cpp
+void Client::printPanierValider() const {
+    for (size_t i = 0; i < _panierValider.size(); ++i) {
+        std::cout << "Produit ID: " << _panierValider[i].first
+                  << "\tQuantité: " << _panierValider[i].second
+                  << std::endl;
     }
 }
 
-std::ostream& operator<<(std::ostream& osClient, Client& client)
-{
-    std::string display = "Le client " + client.getNom() + " "+ client.getPrenom()+  
-    + "avec pour numero de telephone" + std::to_string(client.getNumeroTelephone()) + ".";
+std::vector<std::pair<int, int>> Client::getPanierValider() const {
+    return _panierValider;
+}
+
+std::vector<std::pair<int, int>> Client::retrievePanierValider() const {
+    return _panierValider;
+}
+
+
+
+
+
+
+std::ostream& operator<<(std::ostream& osClient, Client& client) {
+    std::string display = "Le client " + client.getNom() + " " + client.getPrenom() +
+                          " avec pour numero de telephone " + std::to_string(client.getNumeroTelephone()) + ".";
     osClient << display << std::endl;
     return osClient;
 }

@@ -12,7 +12,7 @@ class Client {
     std::string getNom() const;
     std::string getPrenom() const;
     int getNumeroTelephone() const;
-    void getPanierAchat();
+    void getPanierAchat() const;
     void AjouterProduitPanierAchat(Produit& p,int quantite);
     void ViderPanier();
     void ModifierQuantiteProduit(Produit& p , int Quantite);
@@ -20,15 +20,22 @@ class Client {
     void ValiderPanier();
     void getPanierValider();
     friend std::ostream& operator<<(std::ostream& osClient, Client& client);
+    std::vector<std::pair<int, int>> getPanierValider() const;
+    void printPanierValider() const;
+    std::vector<std::pair<int, int>> retrievePanierValider() const;
+    
 
 
     private:
-        std::string _prenom;
         std::string _nom;
+        std::string _prenom;
         int _numeroTelephone;
         std::vector<std::pair<int,int>>_panierAchat;
         std::vector<std::vector<int>> board;
-        std::vector<std::pair<int,int>>_panierValider;
+        std::vector<std::pair<int,int>> _panierValider;
+        std::vector<std::pair<int, int>> _PanierCommande;
+
+        
 };
 
 #endif
